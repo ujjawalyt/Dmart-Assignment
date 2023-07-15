@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,4 +22,31 @@ public class GlobalExceptionHandler {
 		
 		return new ResponseEntity<MyErrorDetails>(error, HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	@ExceptionHandler(ProductNotFoundException.class) 
+	public ResponseEntity<MyErrorDetails> myPNFExeception( ProductNotFoundException pe , WebRequest wr){
+		
+		MyErrorDetails error = new MyErrorDetails();
+		error.setTimestamp(LocalDateTime.now());
+		error.setMessage(pe.getMessage());
+		error.setDescription(wr.getDescription(false));
+		
+		return new ResponseEntity<MyErrorDetails>(error, HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	@ExceptionHandler(StockNotFoundException.class) 
+	public ResponseEntity<MyErrorDetails> mySNFExeception( StockNotFoundException snfe , WebRequest wr){
+		
+		MyErrorDetails error = new MyErrorDetails();
+		error.setTimestamp(LocalDateTime.now());
+		error.setMessage(snfe.getMessage());
+		error.setDescription(wr.getDescription(false));
+		
+		return new ResponseEntity<MyErrorDetails>(error, HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	
 }
