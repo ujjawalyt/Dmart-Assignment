@@ -18,19 +18,33 @@ import com.stock.service.StockMovementService;
 @RequestMapping("stock/")
 public class StockMovementController {
 
-	
 	@Autowired
 	private StockMovementService stockMovementService;
-	
-	@PostMapping("/stockId{stockId}/location{locationId}/destination/{destinationId}/noOfQuantity/{quantity}")
-		public ResponseEntity<StockMovement> moveStockItem(@PathVariable("stockId") Long stockId,
-				@PathVariable("locationId") Long locationId,
-				@PathVariable("destinationId") Long destinationId,
-				@PathVariable("quantity") int quantity
-				) throws StockNotFoundException, StoreLocationNotFound,InsufficientStockException{
-			
-			return new ResponseEntity<StockMovement>
-			(stockMovementService.moveStockItem(stockId, locationId, destinationId, quantity),HttpStatus.CREATED);
-		}
-	}
 
+	/**
+	 * 
+	 * Moves stock items from one location to another.
+	 * 
+	 * @param stockId       The ID of the stock item to be moved.
+	 * @param locationId    The ID of the current location of the stock item.
+	 * @param destinationId The ID of the destination location for the stock item.
+	 * @param quantity      The quantity of stock items to be moved.
+	 * @return A ResponseEntity object containing the details of the stock movement.
+	 * @throws StockNotFoundException     If the specified stock item is not found.
+	 * @throws StoreLocationNotFound      If either the current location or the
+	 *                                    destination location is not found.
+	 * @throws InsufficientStockException If there is not enough stock available at
+	 *                                    the current location to fulfill the
+	 *                                    movement.
+	 */
+
+	@PostMapping("/stockId{stockId}/location{locationId}/destination/{destinationId}/noOfQuantity/{quantity}")
+	public ResponseEntity<StockMovement> moveStockItem(@PathVariable("stockId") Long stockId,
+			@PathVariable("locationId") Long locationId, @PathVariable("destinationId") Long destinationId,
+			@PathVariable("quantity") int quantity)
+			throws StockNotFoundException, StoreLocationNotFound, InsufficientStockException {
+
+		return new ResponseEntity<StockMovement>(
+				stockMovementService.moveStockItem(stockId, locationId, destinationId, quantity), HttpStatus.CREATED);
+	}
+}

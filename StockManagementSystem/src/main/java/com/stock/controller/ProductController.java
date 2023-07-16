@@ -21,6 +21,12 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
+	/**
+	Adds a new product.
+	@param product The ProductDto object containing the details of the product to be added.
+	@return A ResponseEntity object containing the created product information.
+	*/
+	
 	@PostMapping("/save")
 	public ResponseEntity<ProductDto> addNewProduct(@RequestBody ProductDto product){
 		

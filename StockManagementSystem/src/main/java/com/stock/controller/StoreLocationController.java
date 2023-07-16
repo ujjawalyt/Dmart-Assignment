@@ -19,6 +19,16 @@ public class StoreLocationController {
 	@Autowired
 	private StoreLocationService storeLocationService;
 
+	/**
+	 * 
+	 * Adds a new store location.
+	 * 
+	 * @param storeLocationDto The StoreLocationDto object containing the details of
+	 *                         the store location to be added.
+	 * @return A ResponseEntity object containing the created store location
+	 *         information.
+	 */
+
 	@PostMapping("/save")
 	public ResponseEntity<StoreLocationDto> addNewLocation(@RequestBody StoreLocationDto storeLocationDto) {
 
