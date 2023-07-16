@@ -1,5 +1,8 @@
 package com.stock.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,5 +64,18 @@ public class StockItemSeviceImpl implements StockItemService {
 
 		return modelMapper.map(updatedStockItem, StockItemDto.class);
 
+	}
+
+	@Override
+	public List<StockItemDto> getAllStockItem() throws StockNotFoundException {
+		
+		 List<StockItem> stockItems = stockItemRepository.findAll();
+		    if (stockItems.isEmpty()) {
+		        throw new StockNotFoundException("No stock items found.");
+		    }
+
+		    return stockItems.stream()
+		            .map(stockItem -> modelMapper.map(stockItem, StockItemDto.class))
+		            .collect(Collectors.toList());
 	}
 }

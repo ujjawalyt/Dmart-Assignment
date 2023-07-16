@@ -47,6 +47,17 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<MyErrorDetails>(error, HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(StoreLocationNotFound.class) 
+	public ResponseEntity<MyErrorDetails> mySLNFExeception( StoreLocationNotFound slnf , WebRequest wr){
+		
+		MyErrorDetails error = new MyErrorDetails();
+		error.setTimestamp(LocalDateTime.now());
+		error.setMessage(slnf.getMessage());
+		error.setDescription(wr.getDescription(false));
+		
+		return new ResponseEntity<MyErrorDetails>(error, HttpStatus.BAD_REQUEST);
+	}
+	
 	
 	
 }
